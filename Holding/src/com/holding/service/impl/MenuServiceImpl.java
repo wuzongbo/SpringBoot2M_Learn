@@ -28,9 +28,9 @@ public class MenuServiceImpl implements MenuService {
 	}
 	
 	@Override
-	public List<Menu> getSecondMenu(Integer menuId) throws Exception {
+	public List<Menu> getSecondMenu() throws Exception {
 		// TODO Auto-generated method stub
-		return menuMapper.getSecondMenu(menuId);
+		return menuMapper.getSecondMenu();
 	}
 
 	@Override

@@ -38,18 +38,19 @@
 					<c:forEach var="i" begin="0" end="${sessionScope.menuLength-1}">
 						<li class="layui-nav-item" onclick="getOnClickItem(this.id)"
 							id="${sessionScope.firstMenu[i].menuName}">
-							<a class="" href="javascript:;">
-								${sessionScope.firstMenu[i].menuName} 
+							<a class="" href="javascript:;"> ${sessionScope.firstMenu[i].menuName} 
 								<span class="layui-nav-more"></span>
-							</a>
-							<dl class="layui-nav-child">
-								<c:forEach var="j" begin="1"
-									end="${sessionScope.secondMenuLength}">
-									<dd>
-										<a href="javascript:;">${sessionScope.secondMenu[j-1].menuName}</a>
-									</dd>
-								</c:forEach>
-							</dl>
+						    </a> 
+							
+								<dl class="layui-nav-child">
+									<c:forEach var="j" begin="1" end="${sessionScope.secondMenuLength}">
+									<c:if test="${sessionScope.firstMenu[i].menuId==sessionScope.secondMenu[j-1].menuMid}">
+										<dd>
+											<a href="javascript:;">${sessionScope.secondMenu[j-1].menuName}</a>
+										</dd>
+									</c:if>
+									</c:forEach>
+								</dl>
 						</li>
 					</c:forEach>
 
@@ -72,7 +73,8 @@
 			var element = layui.element;
 		});
 		function getOnClickItem(menuname) {
-			$.get("/Holding/menu/getsecondmenu.do?menuname="+menuname);
+			$.get("/Holding/menu/getsecondmenu.do?menuname=" + menuname);
+			
 		}
 	</script>
 </body>

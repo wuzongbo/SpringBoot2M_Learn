@@ -16,7 +16,7 @@ public interface MenuService {
 	String addMenu(String menuName,Integer menuMid) throws Exception;
 	
 	//查询二级菜单
-	List<Menu> getSecondMenu(Integer menuId) throws Exception;
+	List<Menu> getSecondMenu() throws Exception;
 	
 	//根据菜单名查询菜单ID
 	Integer getMenuId(String menuName) throws Exception;

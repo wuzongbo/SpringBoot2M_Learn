@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.holding.po.Menu;
 import com.holding.service.MenuService;
@@ -33,13 +34,16 @@ public class MenuController {
 	 }
 	 
 	 @RequestMapping("/getsecondmenu.do")
+	 @ResponseBody
 	 public String getSecondMenu(HttpSession session,HttpServletRequest request,HttpServletResponse response)throws Exception{
 		 String menuName=request.getParameter("menuname");
-		 System.out.println(menuName);
+		 System.out.println("返回菜单名："+menuName);
 		 Integer menuId=menuService.getMenuId(menuName);
-		 System.out.println(menuId);
-		 List<Menu> secondMenu=menuService.getSecondMenu(menuId);
-		 System.out.println(secondMenu);
+		 System.out.println("返回菜单id"+menuId);
+		 List<Menu> secondMenu=menuService.getSecondMenu();
+		 System.out.println("二级菜单："+secondMenu);
+		 System.out.println("二级菜单长度："+secondMenu.size());
+		 session.setAttribute("menuMid", menuId);
 		 session.setAttribute("secondMenuLength", secondMenu.size());
 		 session.setAttribute("secondMenu", secondMenu);
 		 return "menu/BackgroundMainPage";

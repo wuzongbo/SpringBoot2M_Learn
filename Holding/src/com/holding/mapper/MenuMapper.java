@@ -17,8 +17,8 @@ public interface MenuMapper {
 	String addMenu(String menuName,Integer menuMid) throws Exception;
 	
 	//查询二级菜单
-	@Select("select * from menu where menumid=#{menuId}")
-	List<Menu> getSecondMenu(Integer menuId ) throws Exception;
+	@Select("select * from menu where menumid<>0")
+	List<Menu> getSecondMenu() throws Exception;
 	
 	//根据菜单名查询菜单ID
 	@Select("select menuid from menu where menuname=#{menuName}") 
