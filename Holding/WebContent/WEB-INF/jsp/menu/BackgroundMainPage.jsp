@@ -35,26 +35,36 @@
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree " lay-shrink="all" lay-filter="test" >
-					<c:forEach var="i" begin="0" end="${sessionScope.menuLength-1}">
+					<c:forEach var="menu" items="${menus}">
 						<li class="layui-nav-item" onclick="getOnClickItem(this.id)"
-							id="${sessionScope.firstMenu[i].menuname}" lay-filter="secondemenu">
-							<a class="" href="javascript:;"> ${sessionScope.firstMenu[i].menuname} 
+							id="" lay-filter="secondemenu">
+							<a class="" href="javascript:;">${menu.menuname}
 								<span class="layui-nav-more"></span>
 						    </a> 
-							
-								<dl class="layui-nav-child">
+							 <dl class="layui-nav-child">
+								<c:forEach  items="${menu.menus}" var="sub">
+								<dd>
+									<a href="javascript:;">${sub.menuname}</a>
+								</dd>
+								</c:forEach>
+							</dl> 
+								<%--
+								废弃二级列表循环
+								 <dl class="layui-nav-child">
 									<c:forEach var="j" begin="1" end="${sessionScope.secondMenuLength}">
-									<c:if test="${sessionScope.firstMenu[i].menuid==sessionScope.allSecondMenu[i].menus}">
+									<c:if test="${sessionScope.firstMenu[i].menuid==sessionScope.allSecondMenu[i].menus[i].menumid}">
 										<dd>
 											<a href="javascript:;">${sessionScope.allSecondMenu[j-1].menuname}</a>
 										</dd>
 									</c:if>
 									</c:forEach>
 								</dl>
+								 --%>
 						</li>
 					</c:forEach>
 					</ul>
 					</div>
+				
 
 
 		<div class="layui-body">

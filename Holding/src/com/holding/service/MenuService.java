@@ -21,7 +21,7 @@ public interface MenuService {
 	 */
 	
 	//根据Mid查询菜单
-	List<Menu> getFirstMenuByMid(Integer menuMid) throws Exception;
+	List<Menu> getMenuByMid(Integer menuMid) throws Exception;
 	
 	//根据已获得一级菜单id查询二级菜单
 	List<MenuVM> getAllMenuByMid()throws Exception;
