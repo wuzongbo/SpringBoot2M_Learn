@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,16 +25,9 @@ public class MenuController {
 	 private MenuService menuService;
 	 
 	 @RequestMapping("/getfirstmenu.do")
-	 public String getFirstMenu(HttpSession session,HttpServletRequest request,HttpServletResponse response)throws Exception{
-		 List<Menu> firstMenu=menuService.getFirstMenuByMid(0);
-		 int menuLength=firstMenu.size();
-		 session.setAttribute("menuLength", menuLength);
-		 session.setAttribute("firstMenu", firstMenu);
-		 System.out.println(firstMenu);
-		 List<MenuVM> allSecondMenu=menuService.getAllMenuByMid();
-		 System.out.println(allSecondMenu);
-		 session.setAttribute("allSecondMenuLength", allSecondMenu.size());
-		 session.setAttribute("allSecondMenu", allSecondMenu);
+	 public String getFirstMenu(Model model,HttpServletRequest request,HttpServletResponse response)throws Exception{
+		 List<MenuVM> firstMenu=menuService.getAllMenuByMid();
+		 model.addAttribute("menus", firstMenu);
 		 return "menu/BackgroundMainPage";
 	 }
 	 

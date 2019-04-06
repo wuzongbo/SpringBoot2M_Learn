@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.holding.po.Menu;
 
-public class MenuVM {
+public class MenuVM extends Menu {
 	private List<Menu> menus;
 
 	public List<Menu> getMenus() {
