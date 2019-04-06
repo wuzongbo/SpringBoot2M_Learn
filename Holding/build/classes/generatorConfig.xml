@@ -43,6 +43,7 @@
 		<table tableName="room"></table>
 		<table tableName="seat"></table>
 		<table tableName="user"></table>
+		<table tableName="menu"></table>
 
 	</context>
 </generatorConfiguration>

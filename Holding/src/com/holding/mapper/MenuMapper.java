@@ -1,26 +1,30 @@
 package com.holding.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-
 import com.holding.po.Menu;
+import com.holding.po.MenuExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper {
+    long countByExample(MenuExample example);
 
-	//查询一级菜单
-	@Select("select * from menu where menumid=0")
-	List<Menu> getFirstMenu() throws Exception;
-	
-	@Insert("insert into menu (`menuname`,`menumid`) values ('#{menuName}','#{menuMid}')")
-	String addMenu(String menuName,Integer menuMid) throws Exception;
-	
-	//查询二级菜单
-	@Select("select * from menu where menumid<>0")
-	List<Menu> getSecondMenu() throws Exception;
-	
-	//根据菜单名查询菜单ID
-	@Select("select menuid from menu where menuname=#{menuName}") 
-	Integer getMenuId(String menuName) throws Exception;
-}	
+    int deleteByExample(MenuExample example);
+
+    int deleteByPrimaryKey(Integer menuid);
+
+    int insert(Menu record);
+
+    int insertSelective(Menu record);
+
+    List<Menu> selectByExample(MenuExample example);
+
+    Menu selectByPrimaryKey(Integer menuid);
+
+    int updateByExampleSelective(@Param("record") Menu record, @Param("example") MenuExample example);
+
+    int updateByExample(@Param("record") Menu record, @Param("example") MenuExample example);
+
+    int updateByPrimaryKeySelective(Menu record);
+
+    int updateByPrimaryKey(Menu record);
+}
