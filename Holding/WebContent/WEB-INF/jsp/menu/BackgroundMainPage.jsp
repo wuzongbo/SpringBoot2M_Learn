@@ -38,13 +38,13 @@
 					<c:forEach var="i" begin="0" end="${sessionScope.menuLength-1}">
 						<li class="layui-nav-item" onclick="getOnClickItem(this.id)"
 							id="${sessionScope.firstMenu[i].menuname}" lay-filter="secondemenu">
-							<a class="" href="javascript:;"> ${sessionScope.allSecondMenu.menus.Menu[i].menuid} 
+							<a class="" href="javascript:;"> ${sessionScope.firstMenu[i].menuname} 
 								<span class="layui-nav-more"></span>
 						    </a> 
 							
 								<dl class="layui-nav-child">
 									<c:forEach var="j" begin="1" end="${sessionScope.secondMenuLength}">
-									<c:if test="${sessionScope.firstMenu[i].menuid==sessionScope.allSecondMenu.menus.Menu[j-1].menumid}">
+									<c:if test="${sessionScope.firstMenu[i].menuid==sessionScope.allSecondMenu[i].menus}">
 										<dd>
 											<a href="javascript:;">${sessionScope.allSecondMenu[j-1].menuname}</a>
 										</dd>
