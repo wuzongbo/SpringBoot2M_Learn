@@ -6,6 +6,6 @@ public class test {
 		
 		System.out.println("kdfjsdf");
 		
-		
+		System.out.println("³Â·¢Õò");
 	}
 }
