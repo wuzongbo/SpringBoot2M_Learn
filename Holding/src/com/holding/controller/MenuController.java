@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.holding.po.Menu;
 import com.holding.service.MenuService;
+import com.holding.vm.MenuVM;
 
 @Controller
 @RequestMapping("/menu")
@@ -24,30 +25,34 @@ public class MenuController {
 	 
 	 @RequestMapping("/getfirstmenu.do")
 	 public String getFirstMenu(HttpSession session,HttpServletRequest request,HttpServletResponse response)throws Exception{
-		 List<Menu> firstMenu=menuService.getFirstMenu();
+		 List<Menu> firstMenu=menuService.getFirstMenuByMid(0);
 		 int menuLength=firstMenu.size();
-		 System.out.println(firstMenu);
 		 session.setAttribute("menuLength", menuLength);
 		 session.setAttribute("firstMenu", firstMenu);
 		 System.out.println(firstMenu);
+		 List<MenuVM> allSecondMenu=menuService.getAllMenuByMid();
+		 System.out.println(allSecondMenu);
+		 session.setAttribute("allSecondMenuLength", allSecondMenu.size());
+		 session.setAttribute("allSecondMenu", allSecondMenu);
 		 return "menu/BackgroundMainPage";
 	 }
 	 
-	 @RequestMapping("/getsecondmenu.do")
-	 @ResponseBody
-	 public String getSecondMenu(HttpSession session,HttpServletRequest request,HttpServletResponse response)throws Exception{
-		 String menuName=request.getParameter("menuname");
-		 System.out.println("返回菜单名："+menuName);
-		 Integer menuId=menuService.getMenuId(menuName);
-		 System.out.println("返回菜单id"+menuId);
-		 List<Menu> secondMenu=menuService.getSecondMenu();
-		 System.out.println("二级菜单："+secondMenu);
-		 System.out.println("二级菜单长度："+secondMenu.size());
-		 session.setAttribute("menuMid", menuId);
-		 session.setAttribute("secondMenuLength", secondMenu.size());
-		 session.setAttribute("secondMenu", secondMenu);
-		 return "menu/BackgroundMainPage";
-	 }
+	/*（废弃）根据一级菜单获取二级菜单
+	 * @RequestMapping("/getsecondmenu.do")
+	 * 
+	 * @ResponseBody public String getSecondMenu(HttpSession
+	 * session,HttpServletRequest request,HttpServletResponse response)throws
+	 * Exception{ String menuName=request.getParameter("menuname");
+	 * System.out.println("返回菜单名："+menuName); Integer
+	 * menuId=menuService.getMenuId(menuName); System.out.println("返回菜单id"+menuId);
+	 * List<Menu> secondMenu=menuService.getSecondMenu();
+	 * System.out.println("二级菜单："+secondMenu);
+	 * System.out.println("二级菜单长度："+secondMenu.size());
+	 * session.setAttribute("menuMid", menuId);
+	 * session.setAttribute("secondMenuLength", secondMenu.size());
+	 * session.setAttribute("secondMenu", secondMenu); return
+	 * "menu/BackgroundMainPage"; }
+	 */
 	 @RequestMapping("/addmenu.do")
 	 public String addMenu(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception{
 		 

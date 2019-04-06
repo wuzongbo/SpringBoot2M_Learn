@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>后台管理</title>
 <link rel="stylesheet"
-	href="${basePath }/js/plugins/layui/css/layui.css">
+	href="${basePath }/js/plugins/layui/css/layui.css" media="all">
 <script type="text/javascript"  src="${basePath }/js/jquery-3.3.1.js"></script>
 </head>
 <body class="layui-layout-body">
@@ -34,19 +34,19 @@
 		<div class="layui-side layui-bg-black">
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-				<ul class="layui-nav layui-nav-tree" lay-filter="test">
+				<ul class="layui-nav layui-nav-tree " lay-shrink="all" lay-filter="test" >
 					<c:forEach var="i" begin="0" end="${sessionScope.menuLength-1}">
 						<li class="layui-nav-item" onclick="getOnClickItem(this.id)"
-							id="${sessionScope.firstMenu[i].menuName}">
-							<a class="" href="javascript:;"> ${sessionScope.firstMenu[i].menuName} 
+							id="${sessionScope.firstMenu[i].menuname}" lay-filter="secondemenu">
+							<a class="" href="javascript:;"> ${sessionScope.firstMenu[i].menuname} 
 								<span class="layui-nav-more"></span>
 						    </a> 
 							
 								<dl class="layui-nav-child">
 									<c:forEach var="j" begin="1" end="${sessionScope.secondMenuLength}">
-									<c:if test="${sessionScope.firstMenu[i].menuId==sessionScope.secondMenu[j-1].menuMid}">
+									<c:if test="${sessionScope.firstMenu[i].menuid==sessionScope.allSecondMenu[i].menus}">
 										<dd>
-											<a href="javascript:;">${sessionScope.secondMenu[j-1].menuName}</a>
+											<a href="javascript:;">${sessionScope.allSecondMenu[j-1].menuname}</a>
 										</dd>
 									</c:if>
 									</c:forEach>
@@ -57,9 +57,9 @@
 					</div>
 
 
-					<div class="layui-body">
+		<div class="layui-body">
 			<!-- 内容主体区域 -->
-			<div style="padding: 15px;">内容主体区域</div>
+			<div id="test1"></div>
 		</div>
 
 		<div class="layui-footer">
@@ -68,15 +68,23 @@
 		</div>
 	</div>
 	</div>
-	<script src="${basePath }/js/plugins/layui/layui.js"></script>
+	
+	<script src="${basePath }/js/plugins/layui/layui.all.js"></script>
+	
+              
+	
 	<script>
 		//JavaScript代码区域
-		layui.use('element', function() {
+		;!function() {
 			var element = layui.element;
-		});
+			element.on('nav(test)', function(data){
+				  console.log(this.id); //当前Tab标题所在的原始DOM元素
+				  console.log(data.index); //得到当前Tab的所在下标
+				  console.log(data.elem); //得到当前的Tab大容器
+				});
+		}();
 		function getOnClickItem(menuname) {
 			$.get("/Holding/menu/getsecondmenu.do?menuname=" + menuname);
-			
 		}
 	</script>
 </body>
