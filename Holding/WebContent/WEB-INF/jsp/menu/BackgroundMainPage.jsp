@@ -53,7 +53,8 @@
 								</dl>
 						</li>
 					</c:forEach>
-
+					</ul>
+					</div>
 
 
 					<div class="layui-body">
@@ -65,6 +66,7 @@
 			<!-- 底部固定区域 -->
 			管理员界面 - 底部固定区域
 		</div>
+	</div>
 	</div>
 	<script src="${basePath }/js/plugins/layui/layui.js"></script>
 	<script>
