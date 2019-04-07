@@ -17,19 +17,20 @@ import com.holding.po.Room;
 import com.holding.po.RoomExample;
 import com.holding.service.FloorService;
 import com.holding.service.LibraryService;
-import com.holding.vm.FloorVm;
-import com.holding.vm.FloorVm;
+import com.holding.vm.FloorCListVm;
+import com.holding.vm.LibraryVm;
+import com.holding.vm.FloorCListVm;
 
 @RestController
 public class TestController {
 
 	@Autowired
-	private FloorService service;
+	private LibraryService service;
 	
 	
 	@RequestMapping("/test.do")
-	public List<FloorVm> getLibraryList(int libraryId) {
-		return service.getFloorVmList(libraryId);
+	public LibraryVm getLibraryList(int libraryId,int floorId,int roomId,int deskId,int seatId) {
+		return service.getLibraryVmById(libraryId, floorId, roomId, deskId, seatId);
 		
 		
 	}

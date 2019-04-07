@@ -24,4 +24,9 @@ public class SeatServiceImpl implements SeatService {
 		return seatMapper.selectByExample(seatExample);
 	}
 
+	@Override
+	public Seat getSeatById(int seatId) {
+		return seatMapper.selectByPrimaryKey(seatId);
+	}
+
 }

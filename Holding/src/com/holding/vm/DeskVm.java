@@ -1,20 +1,19 @@
 package com.holding.vm;
 
-import java.util.List;
-
 import com.holding.po.Desk;
 import com.holding.po.Seat;
 
 public class DeskVm extends Desk{
 
-	private List<Seat> seat;
+	private Seat seat;
 
-	public List<Seat> getSeat() {
+	public Seat getSeat() {
 		return seat;
 	}
 
-	public void setSeat(List<Seat> seat) {
+	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
+	
 	
 }

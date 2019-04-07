@@ -1,19 +1,17 @@
 package com.holding.vm;
 
-import java.util.List;
-
 import com.holding.po.Floor;
-import com.holding.po.Room;
 
 public class FloorVm extends Floor{
 
-	private List<Room> rooms;
+	private RoomVm roomVm;
 
-	public List<Room> getRooms() {
-		return rooms;
+	public RoomVm getRoomVm() {
+		return roomVm;
 	}
 
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
+	public void setRoomVm(RoomVm roomVm) {
+		this.roomVm = roomVm;
 	}
+	
 }

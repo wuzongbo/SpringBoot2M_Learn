@@ -11,4 +11,5 @@ public interface SeatService {
 
 	public List<Seat> getSeatList(int deskId);
 	
+	public Seat getSeatById(int seatId);
 }

@@ -12,6 +12,7 @@ import com.holding.po.DeskExample;
 import com.holding.po.Seat;
 import com.holding.service.DeskService;
 import com.holding.service.SeatService;
+import com.holding.vm.DeskCListVm;
 import com.holding.vm.DeskVm;
 
 @Service
@@ -23,14 +24,14 @@ public class DeskServiceImpl implements DeskService {
 	private SeatService seatService;
 	
 	@Override
-	public List<DeskVm> getDeskVmList(int roomId) {
+	public List<DeskCListVm> getDeskVmList(int roomId) {
 		DeskExample deskExample = new DeskExample();
 		DeskExample.Criteria dCriteria = deskExample.createCriteria();
 		dCriteria.andRoomidEqualTo(roomId);
 		List<Desk> desks = deskMapper.selectByExample(deskExample);//获取指定房间的座子列表
-		List<DeskVm> deskVms = new ArrayList<>();
+		List<DeskCListVm> deskVms = new ArrayList<>();
 		for (Desk desk : desks) {
-			DeskVm deskVm = new DeskVm();
+			DeskCListVm deskVm = new DeskCListVm();
 			deskVm.setId(desk.getId());
 			deskVm.setName(desk.getName());
 			deskVm.setHeight(desk.getHeight());
@@ -46,6 +47,17 @@ public class DeskServiceImpl implements DeskService {
 			deskVms.add(deskVm);
 		}
 		return deskVms;
+	}
+
+	@Override
+	public DeskVm getDeskVmById(int deskId,int seatId) {
+		DeskVm deskVm = new DeskVm();
+		Desk desk = deskMapper.selectByPrimaryKey(deskId);
+		Seat seat = seatService.getSeatById(seatId);
+		deskVm.setSeat(seat);
+		deskVm.setId(desk.getId());
+		//...装配包装类
+		return deskVm;
 	}
 
 }
