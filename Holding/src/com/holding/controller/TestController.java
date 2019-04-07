@@ -29,10 +29,8 @@ public class TestController {
 	
 	
 	@RequestMapping("/test.do")
-	public LibraryVm getLibraryList(int libraryId,int floorId,int roomId,int deskId,int seatId) {
-		return service.getLibraryVmById(libraryId, floorId, roomId, deskId, seatId);
-		
-		
+	public LibraryVm getLibraryList() {
+		return null;
 	}
 	
 }

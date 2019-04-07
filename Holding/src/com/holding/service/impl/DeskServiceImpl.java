@@ -1,10 +1,12 @@
 package com.holding.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.holding.mapper.DeskMapper;
 import com.holding.po.Desk;
@@ -16,6 +18,7 @@ import com.holding.vm.DeskCListVm;
 import com.holding.vm.DeskVm;
 
 @Service
+@Transactional
 public class DeskServiceImpl implements DeskService {
 
 	@Autowired
@@ -28,7 +31,7 @@ public class DeskServiceImpl implements DeskService {
 		DeskExample deskExample = new DeskExample();
 		DeskExample.Criteria dCriteria = deskExample.createCriteria();
 		dCriteria.andRoomidEqualTo(roomId);
-		List<Desk> desks = deskMapper.selectByExample(deskExample);//»ñÈ¡Ö¸¶¨·¿¼äµÄ×ù×ÓÁÐ±í
+		List<Desk> desks = deskMapper.selectByExample(deskExample);
 		List<DeskCListVm> deskVms = new ArrayList<>();
 		for (Desk desk : desks) {
 			DeskCListVm deskVm = new DeskCListVm();
@@ -42,7 +45,7 @@ public class DeskServiceImpl implements DeskService {
 			deskVm.setYaxis(desk.getYaxis());
 			deskVm.setRoomid(desk.getRoomid());
 			deskVm.setStatus(desk.getStatus());
-			List<Seat> seats = seatService.getSeatList(desk.getId());
+			List<Seat> seats = seatService.getSeatListBydeskId(desk.getId());
 			deskVm.setSeat(seats);
 			deskVms.add(deskVm);
 		}
@@ -56,8 +59,53 @@ public class DeskServiceImpl implements DeskService {
 		Seat seat = seatService.getSeatById(seatId);
 		deskVm.setSeat(seat);
 		deskVm.setId(desk.getId());
-		//...×°Åä°ü×°Àà
+		//...×°ï¿½ï¿½ï¿½×°ï¿½ï¿½
 		return deskVm;
+	}
+
+	
+	
+	@Override
+	public void insertDesk(Desk desk) throws SQLException {
+		try {
+			deskMapper.insert(desk);
+		} catch (Exception e) {
+			throw new SQLException("æ·»åŠ å¤±è´¥");
+		}
+	}
+	
+	@Override
+	public void deleteDesk(List<Integer> deskIds) throws SQLException {
+		for (int deskId : deskIds) {
+			try {
+				List<Seat> seats = seatService.getSeatListBydeskId(deskId);
+				List<Integer> seatIds = new ArrayList<>();
+				for (Seat seat : seats) {
+					seatIds.add(seat.getId());
+				}
+				seatService.deleteSeatById(seatIds);
+				deskMapper.deleteByPrimaryKey(deskId);
+			} catch (Exception e) {
+				throw new SQLException("åˆ é™¤å¤±è´¥");
+			}
+		}
+	}
+
+	@Override
+	public void updateDesk(Desk desk) throws SQLException {
+		try {
+			deskMapper.updateByPrimaryKeySelective(desk);
+		} catch (Exception e) {
+			throw new SQLException("ä¿®æ”¹å¤±è´¥");
+		}
+	}
+
+	@Override
+	public List<Desk> getDeskListByRoomId(int roomId) {
+		DeskExample deskExample = new DeskExample();
+		DeskExample.Criteria dCriteria = deskExample.createCriteria();
+		dCriteria.andRoomidEqualTo(roomId);
+		return deskMapper.selectByExample(deskExample);
 	}
 
 }

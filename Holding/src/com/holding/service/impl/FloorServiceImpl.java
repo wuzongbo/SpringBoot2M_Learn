@@ -1,5 +1,6 @@
 package com.holding.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class FloorServiceImpl implements FloorService {
 		FloorExample floorExample = new FloorExample();
 		FloorExample.Criteria fcriteria = floorExample.createCriteria();
 		fcriteria.andLibraryidEqualTo(libraryId);
-		List<Floor> floors = floorMapper.selectByExample(floorExample);//µÃµ½Â¥²ãÁÐ±í
-		// Â¥²ã°ü×°ÀàÁÐ±í
+		List<Floor> floors = floorMapper.selectByExample(floorExample);//ï¿½Ãµï¿½Â¥ï¿½ï¿½ï¿½Ð±ï¿½
+		// Â¥ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½Ð±ï¿½
 		List<FloorCListVm> floorVms = new ArrayList<>();
 		for (Floor floor : floors) {
 			FloorCListVm floorVm = new FloorCListVm();
@@ -55,6 +56,49 @@ public class FloorServiceImpl implements FloorService {
 		
 		floorVm.setId(floor.getId());
 		return floorVm;
+	}
+
+	@Override
+	public void insertFloor(Floor floor) throws SQLException {
+		try {
+			floorMapper.insertSelective(floor);
+		} catch (Exception e) {
+			throw new SQLException("æ·»åŠ å¤±è´¥");
+		}
+	}
+
+	@Override
+	public void deleteFloor(List<Integer> floorIds) throws SQLException {
+		for (int floorId : floorIds) {
+			try {
+				List<Room> rooms = roomService.getRoomList(floorId);
+				List<Integer> roomIds = new ArrayList<>();
+				for (Room room : rooms) {
+					roomIds.add(room.getId());
+				}
+				roomService.deleteRoom(roomIds);
+				floorMapper.deleteByPrimaryKey(floorId);
+			} catch (Exception e) {
+				throw new SQLException("åˆ é™¤å¤±è´¥");
+			}
+		}
+	}
+
+	@Override
+	public void updateFloor(Floor floor) throws SQLException {
+		try {
+			floorMapper.updateByPrimaryKeySelective(floor);
+		} catch (Exception e) {
+			throw new SQLException("ä¿®æ”¹å¤±è´¥");
+		}
+	}
+
+	@Override
+	public List<Floor> getFloorListBylibraryId(int libraryId) {
+		FloorExample floorExample = new FloorExample();
+		FloorExample.Criteria fCriteria = floorExample.createCriteria();
+		fCriteria.andLibraryidEqualTo(libraryId);
+		return floorMapper.selectByExample(floorExample);
 	}
 	
 	
